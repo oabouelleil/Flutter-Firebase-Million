@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_test_million/page/home_page.dart';
 import 'package:firebase_test_million/provider/auth_sign_in.dart';
@@ -7,6 +9,15 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  const bool USE_EMULATOR = false;
+  if (USE_EMULATOR) {
+    FirebaseFirestore.instance.settings = const Settings(
+      host: 'localhost:8080',
+      sslEnabled: false,
+    );
+    await FirebaseAuth.instance.useEmulator("http://localhost:9099");
+  }
   runApp(MyApp());
 }
 
