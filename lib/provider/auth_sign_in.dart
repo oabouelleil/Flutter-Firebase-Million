@@ -6,10 +6,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 class SignInProvider extends ChangeNotifier {
   final googleSignIn = GoogleSignIn();
 
-  Future googleLogin() async {
+  Future<AuthCredential?> googleLoginCredential() async {
     try {
       final googleUser = await googleSignIn.signIn();
-      if (googleUser == null) return;
+      if (googleUser == null) return null;
 
       final googleAuth = await googleUser.authentication;
 
@@ -17,15 +17,37 @@ class SignInProvider extends ChangeNotifier {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
+      return credential;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 
+  Future googleLogin() async {
+    try {
+      AuthCredential? credential = await googleLoginCredential();
+      if (credential == null) return;
       await FirebaseAuth.instance.signInWithCredential(credential);
+      // FirebaseAuth.instance.
     } catch (e) {
       print(e.toString());
     }
     notifyListeners();
   }
 
-  Future facebookLogin() async {
+  Future googleLink() async {
+    try {
+      AuthCredential? credential = await googleLoginCredential();
+      if (credential == null) return;
+      await FirebaseAuth.instance.currentUser!.linkWithCredential(credential);
+    } catch (e) {
+      print(e.toString());
+    }
+    notifyListeners();
+  }
+
+  Future<AuthCredential?> facebookLoginCredential() async {
     try {
       // enum LoginStatus { success, cancelled, failed, operationInProgress }
       final LoginResult loginResult = await FacebookAuth.instance.login(
@@ -40,25 +62,33 @@ class SignInProvider extends ChangeNotifier {
         case (LoginStatus.cancelled):
           print("Facebook Login Cancelled");
           print(loginResult.message);
-          return;
+          return null;
         case (LoginStatus.failed):
           print("Facebook Login Failed");
           print(loginResult.message);
-          return;
+          return null;
         case (LoginStatus.operationInProgress):
           print("Facebook Login Operation In Progress");
           print(loginResult.message);
-          return;
+          return null;
         default:
       }
 
-      // Print Access Token TODO Remove
-      print(loginResult.accessToken!.toJson());
-
-      final facebookAuthCredential =
+      final credential =
           FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
-      await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+      return credential;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future facebookLogin() async {
+    try {
+      AuthCredential? credential = await facebookLoginCredential();
+      if (credential == null) return;
+      await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (e) {
       print(e.toString());
     }
