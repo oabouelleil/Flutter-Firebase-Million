@@ -131,6 +131,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "173335090606-hai6rtl6hnvfns3r66u5n9agq6v066qh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ramo.firebase_test_million",
+            "certificate_hash": "e224a55041ccc8550871aaf88e32bb5620b652a1"
+          }
+        },
+        {
           "client_id": "173335090606-7jtkp58i45u8bdnjojhee6tjahvfv35h.apps.googleusercontent.com",
           "client_type": 3
         }
