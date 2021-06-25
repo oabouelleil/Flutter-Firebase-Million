@@ -24,16 +24,30 @@ class SignInProvider extends ChangeNotifier {
     }
   }
 
-  Future googleLogin() async {
+  Future<bool> googleLogin({bool signUp = false}) async {
     try {
       AuthCredential? credential = await googleLoginCredential();
-      if (credential == null) return;
+      if (credential == null) return false;
+
+      final signInMethods = await FirebaseAuth.instance
+          .fetchSignInMethodsForEmail(googleSignIn.currentUser!.email);
+      if (signUp ^ signInMethods.isEmpty) {
+        // sign_in   empty    cancel (Can't sign in, user doesn't exist)
+        // sign_in  !empty    continue
+        // sign_up   empty    continue
+        // sign_up  !empty    cancel (Can't sign up, user exists)
+        googleSignIn.disconnect();
+        // TODO Prompt User to sign in or sign up instead
+        return true;
+      }
+
       await FirebaseAuth.instance.signInWithCredential(credential);
       // FirebaseAuth.instance.
     } catch (e) {
       print(e.toString());
     }
     notifyListeners();
+    return false;
   }
 
   Future googleLink() async {
@@ -56,6 +70,7 @@ class SignInProvider extends ChangeNotifier {
           "email",
           "public_profile",
         ],
+        loginBehavior: LoginBehavior.dialogOnly,
       );
 
       switch (loginResult.status) {
@@ -84,11 +99,36 @@ class SignInProvider extends ChangeNotifier {
     }
   }
 
-  Future facebookLogin() async {
+  Future<bool> facebookLogin({bool signUp = false}) async {
+    try {
+      AuthCredential? credential = await facebookLoginCredential();
+      if (credential == null) return false;
+
+      final signInMethods = await FirebaseAuth.instance
+          .fetchSignInMethodsForEmail((await FacebookAuth.instance
+              .getUserData(fields: "email"))["email"]);
+      if (signUp ^ signInMethods.isEmpty) {
+        // sign_in   empty    cancel (Can't sign in, user doesn't exist)
+        // sign_in  !empty    continue
+        // sign_up   empty    continue
+        // sign_up  !empty    cancel (Can't sign up, user exists)
+        FacebookAuth.instance.logOut();
+        return true;
+      }
+
+      await FirebaseAuth.instance.signInWithCredential(credential);
+    } catch (e) {
+      print(e.toString());
+    }
+    notifyListeners();
+    return false;
+  }
+
+  Future facebookLink() async {
     try {
       AuthCredential? credential = await facebookLoginCredential();
       if (credential == null) return;
-      await FirebaseAuth.instance.signInWithCredential(credential);
+      await FirebaseAuth.instance.currentUser!.linkWithCredential(credential);
     } catch (e) {
       print(e.toString());
     }
@@ -97,8 +137,9 @@ class SignInProvider extends ChangeNotifier {
 
   Future logout() async {
     if (await googleSignIn.isSignedIn()) await googleSignIn.disconnect();
-    if (await FacebookAuth.instance.accessToken != null)
+    if (await FacebookAuth.instance.accessToken != null) {
       await FacebookAuth.instance.logOut();
+    }
     FirebaseAuth.instance.signOut();
   }
 }

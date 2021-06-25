@@ -11,7 +11,18 @@ class SignUpWidget extends StatefulWidget {
 }
 
 class _SignUpWidgetState extends State<SignUpWidget> {
-  bool newUser = false;
+  bool signUp = false;
+
+  void handleExists(BuildContext context, bool value) {
+    if (value) {
+      final snackBar = SnackBar(
+        content: Text(!signUp
+            ? "You don't have an account, Sign up instead!"
+            : "You already have an account, Sign in instead!"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +58,13 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               minimumSize: Size(double.infinity, 50),
             ),
             icon: FaIcon(FontAwesomeIcons.google),
-            label: Text("Sign " + (newUser ? "Up" : "In") + " with Google"),
+            label: Text("Sign " + (signUp ? "Up" : "In") + " with Google"),
             onPressed: () {
               final provider =
                   Provider.of<SignInProvider>(context, listen: false);
-              provider.googleLogin();
+              provider
+                  .googleLogin(signUp: signUp)
+                  .then((value) => handleExists(context, value));
             },
           ),
           SizedBox(height: 20),
@@ -60,28 +73,30 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               minimumSize: Size(double.infinity, 50),
             ),
             icon: FaIcon(FontAwesomeIcons.facebook),
-            label: Text("Sign " + (newUser ? "Up" : "In") + " with Facebook"),
+            label: Text("Sign " + (signUp ? "Up" : "In") + " with Facebook"),
             onPressed: () {
               final provider =
                   Provider.of<SignInProvider>(context, listen: false);
-              provider.facebookLogin();
+              provider
+                  .facebookLogin(signUp: signUp)
+                  .then((value) => handleExists(context, value));
             },
           ),
           SizedBox(height: 20),
           TextButton(
             child: RichText(
                 text: TextSpan(
-              text: (newUser ? "Already" : "Don't") + " Have an Account? ",
+              text: (signUp ? "Already" : "Don't") + " Have an Account? ",
               children: [
                 TextSpan(
-                  text: "Sign " + (newUser ? "In" : "Up"),
+                  text: "Sign " + (!signUp ? "Up" : "In"),
                   style: TextStyle(decoration: TextDecoration.underline),
                 ),
               ],
             )),
             onPressed: () {
               setState(() {
-                newUser = !newUser;
+                signUp = !signUp;
               });
             },
           ),

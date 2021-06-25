@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_test_million/provider/auth_sign_in.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class LoggedInWidget extends StatefulWidget {
@@ -12,7 +13,7 @@ class LoggedInWidget extends StatefulWidget {
 }
 
 class _LoggedInWidgetState extends State<LoggedInWidget> {
-  final user = FirebaseAuth.instance.currentUser!;
+  var user = FirebaseAuth.instance.currentUser!;
 
   // TODO Remove
   List userList = [];
@@ -60,8 +61,8 @@ class _LoggedInWidgetState extends State<LoggedInWidget> {
           )
         ],
       ),
-      body: Container(
-        alignment: Alignment.center,
+      body: Padding(
+        padding: EdgeInsets.all(32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -86,8 +87,66 @@ class _LoggedInWidgetState extends State<LoggedInWidget> {
                   (user.emailVerified ? "Verified" : "Not Verified"),
             ),
             SizedBox(height: 8),
+            Text(
+              "Linked Accounts: ",
+            ),
+            for (var prov in user.providerData)
+              Text(prov.providerId + ": " + prov.email.toString()),
+            SizedBox(height: 8),
             Text("$_counter"),
             SizedBox(height: 8),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(double.infinity, 50),
+              ),
+              icon: FaIcon(FontAwesomeIcons.google),
+              label: Text("Link Google Account"),
+              onPressed: () {
+                final provider =
+                    Provider.of<SignInProvider>(context, listen: false);
+                provider.googleLink().then((value) {
+                  setState(() {
+                    user = FirebaseAuth.instance.currentUser!;
+                  });
+                });
+              },
+            ),
+            SizedBox(height: 8),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(double.infinity, 50),
+              ),
+              icon: FaIcon(FontAwesomeIcons.google),
+              label: Text("Unlink Google Account"),
+              onPressed: () {
+                user.unlink("google.com").then((value) {
+                  final provider =
+                      Provider.of<SignInProvider>(context, listen: false);
+                  provider.googleSignIn.disconnect().then((value) {
+                    setState(() {
+                      user = FirebaseAuth.instance.currentUser!;
+                    });
+                  });
+                });
+              },
+            ),
+            SizedBox(height: 8),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(double.infinity, 50),
+              ),
+              icon: FaIcon(FontAwesomeIcons.facebook),
+              label: Text("Link Facebook Account"),
+              onPressed: () {
+                final provider =
+                    Provider.of<SignInProvider>(context, listen: false);
+                provider.facebookLink().then((value) {
+                  setState(() {
+                    user = FirebaseAuth.instance.currentUser!;
+                  });
+                });
+              },
+            ),
           ],
         ),
       ),
