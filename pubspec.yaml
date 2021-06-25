@@ -27,6 +27,15 @@ dependencies:
   firebase_core: ^1.3.0
   cloud_firestore: ^2.2.2
 
+  # Authentication
+  firebase_auth: ^1.4.1
+  # Google Auth
+  google_sign_in: ^5.0.4
+  # Google Icon
+  font_awesome_flutter: ^9.1.0
+  # State Management
+  provider: ^5.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
