@@ -31,6 +31,8 @@ dependencies:
   firebase_auth: ^1.4.1
   # Google Auth
   google_sign_in: ^5.0.4
+  # Facebook Auth
+  flutter_facebook_auth: ^3.5.0
   # Google Icon
   font_awesome_flutter: ^9.1.0
   # State Management
