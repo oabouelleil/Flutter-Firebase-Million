@@ -1,4 +1,4 @@
-import 'package:firebase_test_million/provider/google_sign_in.dart';
+import 'package:firebase_test_million/provider/auth_sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -43,8 +43,21 @@ class SignUpWidget extends StatelessWidget {
             label: Text("Sign Up with Google"),
             onPressed: () {
               final provider =
-                  Provider.of<GoogleSignInProvider>(context, listen: false);
+                  Provider.of<SignInProvider>(context, listen: false);
               provider.googleLogin();
+            },
+          ),
+          SizedBox(height: 40),
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              minimumSize: Size(double.infinity, 50),
+            ),
+            icon: FaIcon(FontAwesomeIcons.facebook),
+            label: Text("Sign Up with Facebook"),
+            onPressed: () {
+              final provider =
+                  Provider.of<SignInProvider>(context, listen: false);
+              provider.facebookLogin();
             },
           ),
           SizedBox(height: 40),
