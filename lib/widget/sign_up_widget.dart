@@ -3,8 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-class SignUpWidget extends StatelessWidget {
+class SignUpWidget extends StatefulWidget {
   const SignUpWidget({Key? key}) : super(key: key);
+
+  @override
+  _SignUpWidgetState createState() => _SignUpWidgetState();
+}
+
+class _SignUpWidgetState extends State<SignUpWidget> {
+  bool newUser = false;
 
   @override
   Widget build(BuildContext context) {
@@ -40,37 +47,44 @@ class SignUpWidget extends StatelessWidget {
               minimumSize: Size(double.infinity, 50),
             ),
             icon: FaIcon(FontAwesomeIcons.google),
-            label: Text("Sign Up with Google"),
+            label: Text("Sign " + (newUser ? "Up" : "In") + " with Google"),
             onPressed: () {
               final provider =
                   Provider.of<SignInProvider>(context, listen: false);
               provider.googleLogin();
             },
           ),
-          SizedBox(height: 40),
+          SizedBox(height: 20),
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
               minimumSize: Size(double.infinity, 50),
             ),
             icon: FaIcon(FontAwesomeIcons.facebook),
-            label: Text("Sign Up with Facebook"),
+            label: Text("Sign " + (newUser ? "Up" : "In") + " with Facebook"),
             onPressed: () {
               final provider =
                   Provider.of<SignInProvider>(context, listen: false);
               provider.facebookLogin();
             },
           ),
-          SizedBox(height: 40),
-          RichText(
-              text: TextSpan(
-            text: "Already Have an Account? ",
-            children: [
-              TextSpan(
-                text: "Log In",
-                style: TextStyle(decoration: TextDecoration.underline),
-              ),
-            ],
-          )),
+          SizedBox(height: 20),
+          TextButton(
+            child: RichText(
+                text: TextSpan(
+              text: (newUser ? "Already" : "Don't") + " Have an Account? ",
+              children: [
+                TextSpan(
+                  text: "Sign " + (newUser ? "In" : "Up"),
+                  style: TextStyle(decoration: TextDecoration.underline),
+                ),
+              ],
+            )),
+            onPressed: () {
+              setState(() {
+                newUser = !newUser;
+              });
+            },
+          ),
           Spacer(),
         ],
       ),
