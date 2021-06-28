@@ -1,0 +1,16 @@
+{
+  "HeyThere": "Hey There,",
+  "WelcomeBack": "Welcome Back!",
+  "LoginToYourAccount": "Login to your account",
+  "SignInGoogle": "Sign In with Google",
+  "SignUpGoogle": "Sign Up with Google",
+  "LinkGoogle": "Link Google Account",
+  "SignInFacebook": "Sign In with Facebook",
+  "SignUpFacebook": "Sign Up with Facebook",
+  "SignInPhone": "Sign In with your Phone Number",
+  "LinkFacebook": "Link Facebook Account",
+  "SignIn": "Sign In",
+  "SignUp": "Sign Up",
+  "SignInInstead": "Already have an Account?",
+  "SignUpInstead": "Don't have an Account?"
+}

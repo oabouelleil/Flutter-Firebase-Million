@@ -1,6 +1,8 @@
+import 'package:firebase_test_million/generated/l10n.dart';
 import 'package:firebase_test_million/provider/auth_sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class SignUpWidget extends StatefulWidget {
@@ -26,6 +28,10 @@ class _SignUpWidgetState extends State<SignUpWidget> {
 
   @override
   Widget build(BuildContext context) {
+    String flagGB = 'gb'.toUpperCase().replaceAllMapped(RegExp(r'[A-Z]'),
+        (match) => String.fromCharCode(match.group(0)!.codeUnitAt(0) + 127397));
+    String flagES = 'es'.toUpperCase().replaceAllMapped(RegExp(r'[A-Z]'),
+        (match) => String.fromCharCode(match.group(0)!.codeUnitAt(0) + 127397));
     return Padding(
       padding: EdgeInsets.all(32),
       child: Column(
@@ -37,7 +43,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              "Hey There,\nWelcome Back",
+              S.of(context).HeyThere + "\n" + S.of(context).WelcomeBack,
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -48,7 +54,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              "Login to your account",
+              S.of(context).LoginToYourAccount,
               style: TextStyle(fontSize: 16),
             ),
           ),
@@ -58,7 +64,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               minimumSize: Size(double.infinity, 50),
             ),
             icon: FaIcon(FontAwesomeIcons.google),
-            label: Text("Sign " + (signUp ? "Up" : "In") + " with Google"),
+            label: Text(signUp
+                ? S.of(context).SignUpGoogle
+                : S.of(context).SignInGoogle),
             onPressed: () {
               final provider =
                   Provider.of<SignInProvider>(context, listen: false);
@@ -73,7 +81,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               minimumSize: Size(double.infinity, 50),
             ),
             icon: FaIcon(FontAwesomeIcons.facebook),
-            label: Text("Sign " + (signUp ? "Up" : "In") + " with Facebook"),
+            label: Text(signUp
+                ? S.of(context).SignUpFacebook
+                : S.of(context).SignInFacebook),
             onPressed: () {
               final provider =
                   Provider.of<SignInProvider>(context, listen: false);
@@ -86,10 +96,13 @@ class _SignUpWidgetState extends State<SignUpWidget> {
           TextButton(
             child: RichText(
                 text: TextSpan(
-              text: (signUp ? "Already" : "Don't") + " Have an Account? ",
+              text: (signUp
+                      ? S.of(context).SignInInstead
+                      : S.of(context).SignUpInstead) +
+                  " ",
               children: [
                 TextSpan(
-                  text: "Sign " + (!signUp ? "Up" : "In"),
+                  text: !signUp ? S.of(context).SignUp : S.of(context).SignIn,
                   style: TextStyle(decoration: TextDecoration.underline),
                 ),
               ],
@@ -101,6 +114,34 @@ class _SignUpWidgetState extends State<SignUpWidget> {
             },
           ),
           Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                child: Text(
+                  flagGB,
+                  style: TextStyle(fontSize: 50),
+                ),
+                onPressed: () {
+                  setState(() {
+                    S.load(Locale('en'));
+                  });
+                },
+              ),
+              TextButton(
+                child: Text(
+                  flagES,
+                  style: TextStyle(fontSize: 50),
+                ),
+                onPressed: () {
+                  print(Intl.getCurrentLocale());
+                  setState(() {
+                    S.load(Locale('es'));
+                  });
+                },
+              ),
+            ],
+          ),
         ],
       ),
     );

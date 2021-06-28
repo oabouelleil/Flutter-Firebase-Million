@@ -23,6 +23,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  flutter_localizations:
+    sdk: flutter
+
+  intl: ^0.17.0
+
   cupertino_icons: ^1.0.2
   firebase_core: ^1.3.0
   cloud_firestore: ^2.2.2
@@ -37,6 +43,7 @@ dependencies:
   font_awesome_flutter: ^9.1.0
   # State Management
   provider: ^5.0.0
+
 
 dev_dependencies:
   flutter_test:
@@ -83,3 +90,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_intl:
+  enabled: true

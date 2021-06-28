@@ -1,0 +1,16 @@
+{
+  "HeyThere": "Hola,",
+  "WelcomeBack": "Bienvenido de Nuevo!",
+  "LoginToYourAccount": "Ingrese a su cuenta",
+  "SignInGoogle": "Inicia sesión con Google",
+  "SignUpGoogle": "Regístrese con Google",
+  "LinkGoogle": "Vincular cuenta de Google",
+  "SignInFacebook": "Inicia sesión con Facebook",
+  "SignUpFacebook": "Regístrese con Facebook",
+  "SignInPhone": "Inicie sesión con su número de teléfono",
+  "LinkFacebook": "Vincular cuenta de Facebook",
+  "SignIn": "Registrarse",
+  "SignUp": "Inscribirse",
+  "SignInInstead": "¿Ya tienes una cuenta?",
+  "SignUpInstead": "¿No tienes una cuenta?"
+}
