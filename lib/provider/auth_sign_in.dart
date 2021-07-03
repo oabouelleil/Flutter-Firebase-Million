@@ -27,7 +27,7 @@ class SignInProvider extends ChangeNotifier {
   Future<bool> googleLogin({bool signUp = false}) async {
     try {
       AuthCredential? credential = await googleLoginCredential();
-      if (credential == null) return false;
+      if (credential == null) return true;
 
       final signInMethods = await FirebaseAuth.instance
           .fetchSignInMethodsForEmail(googleSignIn.currentUser!.email);
@@ -102,7 +102,7 @@ class SignInProvider extends ChangeNotifier {
   Future<bool> facebookLogin({bool signUp = false}) async {
     try {
       AuthCredential? credential = await facebookLoginCredential();
-      if (credential == null) return false;
+      if (credential == null) return true;
 
       final signInMethods = await FirebaseAuth.instance
           .fetchSignInMethodsForEmail((await FacebookAuth.instance

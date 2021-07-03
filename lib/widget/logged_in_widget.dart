@@ -73,16 +73,16 @@ class _LoggedInWidgetState extends State<LoggedInWidget> {
             SizedBox(height: 32),
             CircleAvatar(
               radius: 40,
-              backgroundImage: NetworkImage(user.photoURL!),
+              backgroundImage: NetworkImage(user.photoURL ?? ''),
             ),
             SizedBox(height: 8),
             Text(
-              "Name: " + user.displayName!,
+              "Name: " + (user.displayName ?? 'null'),
             ),
             SizedBox(height: 8),
             Text(
               "Email: " +
-                  user.email! +
+                  (user.email ?? 'null') +
                   " | " +
                   (user.emailVerified ? "Verified" : "Not Verified"),
             ),
