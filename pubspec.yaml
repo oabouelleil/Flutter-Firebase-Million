@@ -43,6 +43,7 @@ dependencies:
   font_awesome_flutter: ^9.1.0
   # State Management
   provider: ^5.0.0
+  http: ^0.13.3
 
 
 dev_dependencies:

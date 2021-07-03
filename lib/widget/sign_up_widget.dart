@@ -1,5 +1,6 @@
 import 'package:firebase_test_million/generated/l10n.dart';
 import 'package:firebase_test_million/provider/auth_sign_in.dart';
+import 'package:firebase_test_million/widget/custom_log_in_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -59,6 +60,20 @@ class _SignUpWidgetState extends State<SignUpWidget> {
             ),
           ),
           Spacer(),
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              minimumSize: Size(double.infinity, 50),
+            ),
+            icon: FaIcon(FontAwesomeIcons.user),
+            label: Text(signUp
+                ? S.of(context).CustomSignIn
+                : S.of(context).CustomSignIn),
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => CustomLogInWidget(signUp: signUp)));
+            },
+          ),
+          SizedBox(height: 20),
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
               minimumSize: Size(double.infinity, 50),

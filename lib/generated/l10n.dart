@@ -80,6 +80,16 @@ class S {
     );
   }
 
+  /// `Custom Sign In`
+  String get CustomSignIn {
+    return Intl.message(
+      'Custom Sign In',
+      name: 'CustomSignIn',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Sign In with Google`
   String get SignInGoogle {
     return Intl.message(

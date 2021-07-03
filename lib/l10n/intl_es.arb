@@ -1,7 +1,9 @@
 {
+  "@@locale": "es",
   "HeyThere": "Hola,",
   "WelcomeBack": "Bienvenido de Nuevo!",
   "LoginToYourAccount": "Ingrese a su cuenta",
+  "CustomSignIn": "Inicio de sesión personalizado",
   "SignInGoogle": "Inicia sesión con Google",
   "SignUpGoogle": "Regístrese con Google",
   "LinkGoogle": "Vincular cuenta de Google",

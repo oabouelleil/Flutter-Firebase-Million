@@ -21,6 +21,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "CustomSignIn": MessageLookupByLibrary.simpleMessage(
+            "Inicio de sesión personalizado"),
         "HeyThere": MessageLookupByLibrary.simpleMessage("Hola,"),
         "LinkFacebook":
             MessageLookupByLibrary.simpleMessage("Vincular cuenta de Facebook"),

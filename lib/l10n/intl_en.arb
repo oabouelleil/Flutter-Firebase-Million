@@ -1,7 +1,9 @@
 {
+  "@@locale": "en",
   "HeyThere": "Hey There,",
   "WelcomeBack": "Welcome Back!",
   "LoginToYourAccount": "Login to your account",
+  "CustomSignIn": "Custom Sign In",
   "SignInGoogle": "Sign In with Google",
   "SignUpGoogle": "Sign Up with Google",
   "LinkGoogle": "Link Google Account",
