@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_test_million/provider/auth_sign_in.dart';
 import 'package:flutter/material.dart';
@@ -19,26 +18,7 @@ class _LoggedInWidgetState extends State<LoggedInWidget> {
   List userList = [];
   int _counter = 0;
 
-  void getUsers() async {
-    DocumentReference _userDocumentReference = FirebaseFirestore.instance
-        .collection("user")
-        .doc("eohm2VZlvjs2Ub99NT4O");
-    CollectionReference _recentsCollectionReference =
-        _userDocumentReference.collection("recents");
-
-    DocumentSnapshot user = await _userDocumentReference.get();
-    QuerySnapshot recents = await _recentsCollectionReference.get();
-    print(user.data());
-    if (recents.docs.length != 0)
-      for (var doc in recents.docs) {
-        print(doc.data());
-        userList.add(doc.data());
-      }
-  }
-
   void _update() {
-    print("-----------------------------------------------------");
-    getUsers();
     setState(() {
       _counter++;
     });
