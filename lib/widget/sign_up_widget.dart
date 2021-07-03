@@ -95,18 +95,19 @@ class _SignUpWidgetState extends State<SignUpWidget> {
           SizedBox(height: 20),
           TextButton(
             child: RichText(
-                text: TextSpan(
-              text: (signUp
-                      ? S.of(context).SignInInstead
-                      : S.of(context).SignUpInstead) +
-                  " ",
-              children: [
-                TextSpan(
-                  text: !signUp ? S.of(context).SignUp : S.of(context).SignIn,
-                  style: TextStyle(decoration: TextDecoration.underline),
-                ),
-              ],
-            )),
+              text: TextSpan(
+                text: (signUp
+                        ? S.of(context).SignInInstead
+                        : S.of(context).SignUpInstead) +
+                    " ",
+                children: [
+                  TextSpan(
+                    text: !signUp ? S.of(context).SignUp : S.of(context).SignIn,
+                    style: TextStyle(decoration: TextDecoration.underline),
+                  ),
+                ],
+              ),
+            ),
             onPressed: () {
               setState(() {
                 signUp = !signUp;
